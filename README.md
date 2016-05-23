@@ -3,7 +3,7 @@ Introduction
 
 This package runs [Dudle](https://dudle.inf.tu-dresden.de/) as a [Docker container](https://www.docker.com/).
 
-Dudle stores data together with the code, which is a bit problematic from Docker point of view. This package contains 'scripts/maintenance/dudle-maint.sh' script which can be used to populate and back up polls to/from the container.
+Dudle stores data together with the code, which is a bit problematic from Docker point of view. This package contains 'scripts/maintenance/dudle-maint.sh' script that can be used to populate and back up polls to/from the container.
 
 Installation
 ============
@@ -18,7 +18,7 @@ Fetch Dudle sources, create the Docker image and a folder for backups:
 If you have an existing Dudle installation and and you want to copy polls to the new container:
 
     # cd /your/old/dudle
-    # tar cvfz /srv/dudle/backup/dudle-backup.tar.gz `find . -maxdepth 1 -type d | egrep -v '\./(extensions|locale|\.bzr|css)|^\.$' | xargs`
+    # tar cvfz /srv/dudle/backup/dudle-backup.tar.gz `find . -maxdepth 1 -type d | egrep -v '\./(extensions|locale|\.git|\.bzr|css)|^\.$' | xargs`
 
 If you want to customize your installation, add your CSS and artwork to 'skin/css/' and create/modify 'skin/conf/config.rb'. For more information on customization, see "Pimp your Installation" section in Dudle README.
 
@@ -57,7 +57,7 @@ The following command updates all software:
 
     scripts/maintenance/dudle-maint.sh upgrade
 
-The command creates a new image and container by upgrading the base image (currently Centos 6), Dudle sources and Dudle Docker image scripts. Before upgrade, all polls are backed up automatically.
+The command creates a new image and container by upgrading the base image (currently Centos 7), Dudle sources and Dudle Docker image scripts. Before upgrade, all polls are backed up automatically.
 
 Other commands
 ==============
