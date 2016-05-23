@@ -7,10 +7,10 @@
 # run:
 # docker run -it -p 8888:80 -v /srv/dudle-backup:/backup:Z  --rm --name my-running-dudle my-dudle
 
-FROM centos:6
+FROM centos:7
 
 RUN yum -y install httpd ruby ruby-devel git rubygems gcc make epel-release wget
-RUN yum -y install ruby-gettext-package
+RUN gem install gettext iconv
 RUN yum clean all
 
 CMD [ "/usr/local/bin/start.sh" ]
@@ -22,7 +22,7 @@ COPY ./cgi/ /var/www/html/cgi-bin/
 
 RUN sed -i \
         -e 's/^<Directory "\/var\/www\/html">/<Directory "\/var\/www\/html-original">/g' \
-        -e 's/^ScriptAlias \/cgi-bin\//#ScriptAlias \/cgi-bin\//g' \
+        -e 's/^ *ScriptAlias \/cgi-bin\//#ScriptAlias \/cgi-bin\//g' \
         /etc/httpd/conf/httpd.conf \
     && sed -ri \
 		's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g; \

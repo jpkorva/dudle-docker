@@ -20,7 +20,7 @@ fi
 
 cd $DUDLE_DIR
 
-BACKUP_FOLDERS="`find . -maxdepth 1 -type d | egrep -v '\./(extensions|locale|\.bzr|css)|^\.$' | xargs`"
+BACKUP_FOLDERS="`find . -maxdepth 1 -type d | egrep -v '\./(extensions|locale|\.git|css)|^\.$' | xargs`"
 
 echo Backing up folders: $BACKUP_FOLDERS
 
