@@ -12,6 +12,11 @@ fi
 
 touch $INIT_LOCK_FILE
 
+rm -f /var/run/httpd/httpd.pid
+
 httpd -DFOREGROUND
 
 echo httpd exited
+
+# in case of httpd errors, keep container up until maintenance arrives
+sleep infinity
