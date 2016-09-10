@@ -7,11 +7,25 @@
 # run:
 # docker run -it -p 8888:80 -v /srv/dudle-backup:/backup:Z  --rm --name my-running-dudle my-dudle
 
-FROM centos:7
+FROM fedora:24
 
-RUN yum -y install httpd ruby ruby-devel git rubygems gcc make epel-release wget
-RUN gem install gettext iconv
-RUN yum clean all
+RUN dnf -y install httpd ruby ruby-devel git bison flex glib2 glib2-devel rubygems gcc make wget gettext gettext-devel
+RUN dnf -y install tar which 
+RUN dnf clean all
+RUN gem install fast_gettext gettext locale 
+
+RUN wget marcin.owsiany.pl/potool/potool-0.16.tar.gz
+RUN tar -xvf potool-0.16.tar.gz
+WORKDIR potool-0.16
+RUN make -f Makefile
+RUN make install
+WORKDIR /
+
+# This part does not work, had to build seperately and then copy into the container
+#RUN git clone https://github.com/bkmgit/dudle.git cgi 
+#WORKDIR cgi 
+#RUN make -f Makefile
+#WORKDIR /
 
 CMD [ "/usr/local/bin/start.sh" ]
 
@@ -36,5 +50,4 @@ COPY ./skin/conf/ /var/www/html/cgi-bin/
 RUN chmod -R go-w /var/www/html/cgi-bin
 RUN chgrp apache /var/www/html/cgi-bin
 RUN chmod 775 /var/www/html/cgi-bin
-
 
