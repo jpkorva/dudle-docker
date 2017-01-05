@@ -1,17 +1,32 @@
 # preparations:
-# git clone https://github.com/kellerben/dudle.git cgi
+# git clone https://github.com/bkmgit/dudle.git cgi
 #
 # build:
 # docker build -t my-dudle .
 #
 # run:
 # docker run -it -p 8888:80 -v /srv/dudle-backup:/backup:Z  --rm --name my-running-dudle my-dudle
+#
+# build partly based on https://github.com/fonk/docker-dudle/blob/master/Dockerfile
+FROM fedora:24
+RUN dnf -y install httpd ruby ruby-devel git bison flex glib2 glib2-devel rubygems gcc make wget gettext gettext-devel
+RUN dnf -y install tar which glibc-all-langpacks glibc-langpack-en rubygem-i18n
+RUN dnf clean all
+RUN gem install fast_gettext gettext locale
+RUN export RUBYOPT="-KU -E utf-8:utf-8"
+RUN wget marcin.owsiany.pl/potool/potool-0.16.tar.gz
+RUN tar -xvf potool-0.16.tar.gz
+WORKDIR potool-0.16
+RUN make -f Makefile
+RUN make install
+WORKDIR /
 
-FROM centos:7
+RUN git clone https://github.com/bkmgit/dudle.git cgi 
+WORKDIR cgi 
+# Need to build with localization support
+RUN LC_ALL=en_US.utf8 make 
 
-RUN yum -y install httpd ruby ruby-devel git rubygems gcc make epel-release wget
-RUN gem install gettext iconv
-RUN yum clean all
+WORKDIR /
 
 CMD [ "/usr/local/bin/start.sh" ]
 
@@ -36,9 +51,3 @@ COPY ./skin/conf/ /var/www/html/cgi-bin/
 RUN chmod -R go-w /var/www/html/cgi-bin
 RUN chgrp apache /var/www/html/cgi-bin
 RUN chmod 775 /var/www/html/cgi-bin
-
-RUN cd /var/www/html/cgi-bin && \
-    for i in locale/?? locale/??_??; do \
-        wget -O $i/dudle.mo https://dudle.inf.tu-dresden.de/locale/`basename $i`/dudle.mo; \
-    done
-

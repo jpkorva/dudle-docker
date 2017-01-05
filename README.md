@@ -9,9 +9,10 @@ Installation
 ============
 
 Fetch Dudle sources, create the Docker image and a folder for backups:
-
+    
+    # git clone https://github.com/bkmgit/dudle-docker/
     # cd dudle-docker
-    # git clone https://github.com/kellerben/dudle.git cgi
+    # git clone https://github.com/bkmgit/dudle.git cgi
     # docker build -t my-dudle .
     # mkdir -p /srv/dudle/backup
 
