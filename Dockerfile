@@ -28,6 +28,7 @@ WORKDIR extensions
 RUN git clone https://github.com/kellerben/dudle-extensions-participate.git
 RUN git clone https://github.com/kellerben/dudle-extensions-gpgauth.git
 RUN git clone https://github.com/kellerben/dudle-extensions-anonymous.git
+WORKDIR /
 # Need to build with localization support
 RUN LC_ALL=en_US.utf8 make 
 
