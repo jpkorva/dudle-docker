@@ -8,9 +8,9 @@
 # docker run -it -p 8888:80 -v /srv/dudle-backup:/backup:Z  --rm --name my-running-dudle my-dudle
 #
 # build partly based on https://github.com/fonk/docker-dudle/blob/master/Dockerfile
-FROM fedora:24
+FROM fedora:26
 RUN dnf -y install httpd ruby ruby-devel git bison flex glib2 glib2-devel rubygems gcc make wget gettext gettext-devel
-RUN dnf -y install tar which glibc-all-langpacks glibc-langpack-en rubygem-i18n
+RUN dnf -y install tar which glibc-all-langpacks glibc-langpack-en rubygem-i18n rubygem-json
 RUN dnf clean all
 RUN gem install fast_gettext gettext locale
 RUN export RUBYOPT="-KU -E utf-8:utf-8"
@@ -21,8 +21,13 @@ RUN make -f Makefile
 RUN make install
 WORKDIR /
 
-RUN git clone https://github.com/bkmgit/dudle.git cgi 
+RUN git clone https://github.com/bkmgit/dudle.git cgi
 WORKDIR cgi 
+RUN mkdir extensions
+WORKDIR extensions
+RUN git clone https://github.com/kellerben/dudle-extensions-participate.git
+RUN git clone https://github.com/kellerben/dudle-extensions-gpgauth.git
+RUN git clone https://github.com/kellerben/dudle-extensions-anonymous.git
 # Need to build with localization support
 RUN LC_ALL=en_US.utf8 make 
 
