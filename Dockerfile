@@ -29,11 +29,12 @@ WORKDIR /
 RUN git clone https://github.com/bkmgit/dudle.git cgi
 WORKDIR cgi 
 RUN mkdir extensions
-WORKDIR extensions
 RUN git clone https://github.com/kellerben/dudle-extensions-participate.git
+RUN mv participate extensions
 RUN git clone https://github.com/kellerben/dudle-extensions-gpgauth.git
-RUN git clone https://github.com/kellerben/dudle-extensions-anonymous.git
-WORKDIR /
+RUN mv gpgauth extensions
+RUN git clone https://github.com/kellerben/dudle-extensions-anonymous.git anonymous
+RUN mv anonymous extensions
 # Need to build with localization support
 RUN LC_ALL=en_US.utf8 make 
 
