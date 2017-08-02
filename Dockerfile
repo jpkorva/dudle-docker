@@ -1,11 +1,16 @@
 # preparations:
+# git clone https://github.com/bkmgit/dudle-docker/
+# cd dudle-docker
 # git clone https://github.com/bkmgit/dudle.git cgi
 #
 # build:
 # docker build -t my-dudle .
 #
+# backup directory
+# mkdir -p /srv/dudle/backup
+#
 # run:
-# docker run -it -p 8888:80 -v /srv/dudle-backup:/backup:Z  --rm --name my-running-dudle my-dudle
+# scripts/maintenance/dudle-maint.sh run
 #
 # build partly based on https://github.com/fonk/docker-dudle/blob/master/Dockerfile
 FROM fedora:26
