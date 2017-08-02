@@ -29,9 +29,9 @@ WORKDIR /
 RUN git clone https://github.com/bkmgit/dudle.git cgi
 WORKDIR cgi 
 RUN mkdir extensions
-RUN git clone https://github.com/kellerben/dudle-extensions-participate.git
+RUN git clone https://github.com/kellerben/dudle-extensions-participate.git participate
 RUN mv participate extensions
-RUN git clone https://github.com/kellerben/dudle-extensions-gpgauth.git
+RUN git clone https://github.com/kellerben/dudle-extensions-gpgauth.git gpgauth
 RUN mv gpgauth extensions
 RUN git clone https://github.com/kellerben/dudle-extensions-anonymous.git anonymous
 RUN mv anonymous extensions
