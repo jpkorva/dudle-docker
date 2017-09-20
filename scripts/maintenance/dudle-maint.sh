@@ -94,6 +94,6 @@ case "$1" in
         docker logs $CONTAINER_ID
         ;;
     *)
-        echo "Usage: $0 {run|backup|connect|start|stop|restart|upgrade|logs}"
+        echo "Usage: $0 {run|backup|cleanup|connect|start|stop|restart|upgrade|logs}"
 esac
 
