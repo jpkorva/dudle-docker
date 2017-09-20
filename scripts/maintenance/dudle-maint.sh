@@ -64,6 +64,10 @@ case "$1" in
         get_existing
         backup
         ;;
+    cleanup)
+        get_existing
+        cleanup
+        ;;
     connect)
         get_existing
         connect
