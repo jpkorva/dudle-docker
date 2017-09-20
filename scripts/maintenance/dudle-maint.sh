@@ -19,6 +19,12 @@ backup() {
     docker exec $CONTAINER_ID /usr/local/bin/backup.sh || exit 1
 }
 
+cleanup() {
+    echo Running cleanup for container $CONTAINER_ID
+    
+    docker exec $CONTAINER_ID bash /cgi/dudle_cleanup.sh || exit 1
+}
+
 connect() {
     echo Connecting to container $CONTAINER_ID
 
