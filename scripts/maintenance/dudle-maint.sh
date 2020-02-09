@@ -1,16 +1,18 @@
 #! /bin/sh
 
-get_existing() {
-    CONTAINER_ID=`docker ps -a --filter name=my-running-dudle --format "{{.ID}}"`
+CONTAINER_NAME=my-running-dudle
 
-    if [ $? -ne 0 ] || [ "$CONTAINER_ID" == "" ]; then
+get_existing() {
+    CONTAINER_ID=`docker ps -a --no-trunc --filter name=^/${CONTAINER_NAME}$ --format "{{.ID}}"`
+
+    if [ $? -ne 0 ] || [ "$CONTAINER_ID" = "" ]; then
         echo Dudle container not found $CONTAINER_ID
         exit 1
     fi
 }
 
 run() {
-    docker run -d -v /srv/dudle/backup:/backup:Z -p 8888:80 --name my-running-dudle my-dudle || exit 1
+    docker run -d -v /srv/dudle/backup:/backup:Z -p 8888:80 --name ${CONTAINER_NAME} my-dudle || exit 1
 }
 
 backup() {
