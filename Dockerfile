@@ -7,9 +7,9 @@
 # run:
 # docker run -it -p 8888:80 -v /srv/dudle-backup:/backup:Z  --rm --name my-running-dudle my-dudle
 
-FROM centos:7
+FROM centos:8
 
-RUN yum -y install httpd ruby ruby-devel git rubygems gcc make epel-release wget
+RUN yum -y install httpd ruby ruby-devel git rubygems gcc make epel-release wget redhat-rpm-config
 RUN gem install gettext iconv
 RUN yum clean all
 
