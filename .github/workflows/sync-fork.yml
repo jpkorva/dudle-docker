@@ -16,4 +16,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           owner: jpkorva
           base: master
-          head: master
+          head: main
