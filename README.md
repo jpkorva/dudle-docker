@@ -53,15 +53,16 @@ The latest archive is '/srv/dudle/backup/dudle-backup.tar.gz'.
 Container upgrade
 =================
 
-The following command updates all software:
+The following command updates all involved software:
 
     scripts/maintenance/dudle-maint.sh upgrade
 
-The command creates a new image and container by upgrading the base image (currently Centos 7), Dudle sources and Dudle Docker image scripts. Before upgrade, all polls are backed up automatically.
+A new image and a container are created by upgrading the base image (currently Centos 8), Dudle sources and Dudle Docker image scripts. All polls are backed up automatically before upgrade and restored afterwards.
 
-Other commands
-==============
+Other commands and parameters for dudle-maint.sh
+================================================
 
+* --podman: Use Podman instead of Docker
 * connect: Run a shell inside the container
 * start: Start the container
 * stop: Stop the container
