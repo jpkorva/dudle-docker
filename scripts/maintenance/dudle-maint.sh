@@ -13,7 +13,19 @@ get_existing() {
 }
 
 run() {
-    ${DOCKR} run -d -v /srv/dudle/backup:/backup:Z -p 8888:80 --name ${CONTAINER_NAME} my-dudle || exit 1
+    TZ=`timedatectl show 2> /dev/null | grep Timezone | sed -e 's/Timezone=//g'`
+
+    if [ "$TZ" = "" ]; then
+        if [ -r /etc/timezone ]; then
+            TZ=`cat /etc/timezone`
+        fi
+    fi
+
+    if [ "$TZ" != "" ]; then
+        TZ_PARAM="-e TZ=${TZ}"
+    fi
+
+    ${DOCKR} run -d -v /srv/dudle/backup:/backup:Z ${TZ_PARAM} -p 8888:80 --name ${CONTAINER_NAME} my-dudle || exit 1
 }
 
 backup() {

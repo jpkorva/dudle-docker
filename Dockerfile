@@ -9,6 +9,9 @@
 
 FROM centos:8
 
+# dudle-maint.sh attempts to set container timezone the same as the host has. Alternatively it can be defined here:
+#ENV TZ=Europe/Helsinki
+
 RUN yum -y install httpd ruby ruby-devel git rubygems gcc make epel-release wget redhat-rpm-config
 RUN gem install gettext iconv
 RUN yum clean all
