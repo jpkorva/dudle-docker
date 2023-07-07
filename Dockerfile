@@ -7,10 +7,14 @@
 # run:
 # docker run -it -p 8888:80 -v /srv/dudle-backup:/backup:Z  --rm --name my-running-dudle my-dudle
 
-FROM centos:8
+FROM centos
 
 # dudle-maint.sh attempts to set container timezone the same as the host has. Alternatively it can be defined here:
 #ENV TZ=Europe/Helsinki
+
+# centos needs to be pointed at vaults of its repos, which are now deprecated
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
 RUN yum -y install httpd ruby ruby-devel git rubygems gcc make epel-release wget redhat-rpm-config
 RUN gem install gettext iconv
