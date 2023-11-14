@@ -113,7 +113,7 @@ for param in "$@"; do
             exit 1
     esac
 
-    if [ "$CONT" == "no" ]; then
+    if [ "$CONT" = "no" ]; then
         exit 0
     fi
 done
