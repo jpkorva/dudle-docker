@@ -1,34 +1,34 @@
 Introduction
 ============
 
-This package runs [Dudle](https://dudle.inf.tu-dresden.de/) as a [Docker container](https://www.docker.com/).
+This package runs [DuD-Poll](https://dud-poll.inf.tu-dresden.de/) (former Dudle) as a [Docker container](https://www.docker.com/).
 
-Dudle stores data together with the code, which is a bit problematic from Docker point of view. This package contains 'scripts/maintenance/dudle-maint.sh' script that can be used to populate and back up polls to/from the container.
+The poll data is stored inside the container. However, it can be backed up or populated from/to the container by using the included 'scripts/maintenance/dudle-maint.sh' script.
 
 Installation
 ============
 
-Fetch Dudle sources, create the Docker image and a folder for backups:
+Fetch DuD-Poll sources, create the Docker image and a folder for backups:
 
     # cd dudle-docker
     # git clone https://github.com/kellerben/dudle.git cgi
     # docker build -t my-dudle .
     # mkdir -p /srv/dudle/backup
 
-If you have an existing Dudle installation and and you want to copy polls to the new container:
+If you have an existing DuD-Poll/Dudle installation and want to copy polls to the new container:
 
     # cd /your/old/dudle
     # tar cvfz /srv/dudle/backup/dudle-backup.tar.gz `find . -maxdepth 1 -type d | egrep -v '\./(extensions|locale|\.git|\.bzr|css)|^\.$' | xargs`
 
-If you want to customize your installation, add your CSS and artwork to 'skin/css/' and create/modify 'skin/conf/config.rb'. For more information on customization, see "Pimp your Installation" section in Dudle README.
+If you want to customize your installation, add your CSS and artwork to 'skin/css/' and create/modify 'skin/conf/config.rb'. For more information on customization, see "Pimp your Installation" section in DuD-Poll README.
 
 Create and start the container:
 
     # scripts/maintenance/dudle-maint.sh run
 
-Dudle should be now running on port 8888.
+DuD-Poll should be now running on port 8888.
 
-If you want to co-locate Dudle with other services on port 80, you can use e.g. Apache httpd reverse proxy:
+If you want to co-locate DuD-Poll with other services on port 80, you can use e.g. Apache httpd reverse proxy:
 
     <VirtualHost *:80>
       ServerName dudle.example.com
@@ -57,7 +57,7 @@ The following command updates all involved software:
 
     scripts/maintenance/dudle-maint.sh upgrade
 
-A new image and a container are created by upgrading the base image (currently Centos 8), Dudle sources and Dudle Docker image scripts. All polls are backed up automatically before upgrade and restored afterwards.
+A new image and a container are created by upgrading the base image (currently Redhat ubi8), DuD-Poll sources and maintenance scripts. All polls are backed up automatically before upgrade and restored afterwards.
 
 Other commands and parameters for dudle-maint.sh
 ================================================
