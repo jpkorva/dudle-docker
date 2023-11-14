@@ -7,12 +7,12 @@
 # run:
 # docker run -it -p 8888:80 -v /srv/dudle-backup:/backup:Z  --rm --name my-running-dudle my-dudle
 
-FROM centos:8
+FROM redhat/ubi8
 
 # dudle-maint.sh attempts to set container timezone the same as the host has. Alternatively it can be defined here:
 #ENV TZ=Europe/Helsinki
 
-RUN yum -y install httpd ruby ruby-devel git rubygems gcc make epel-release wget redhat-rpm-config
+RUN yum -y install httpd ruby ruby-devel git rubygems gcc make wget redhat-rpm-config
 RUN gem install gettext iconv
 RUN yum clean all
 
